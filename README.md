@@ -17,27 +17,54 @@ A hardware-efficient, single-qubit quantum architecture tailored for time series
 - Benchmarked on both synthetic and real-world time series datasets
 - Fourier-based expressivity and absorption witness analysis
 
-## 🧠 Key Architectures
+## 🧠 Architectures
 - QRU (Quantum Reupload Unit)
 - PQC (Parameterized Quantum Circuit)
 - VQC (Variational Quantum Circuit)
 - QRU–QRB–Local (with shared ancilla)
 - QRU–QRB–Global (with independent ancilla)
 
-## 📁 Project Structure
+📊 Datasets
+Dataset	Source
+Mackey-Glass	Synthetic chaotic time series
+Sinusoidal Wave	Simple periodic series
+River Level	TAIAO Project (Real-world dataset)
 
-```bash
-.
-├── qru_model.py                  # QRU architecture implementation
-├── pqc_model.py                 # PQC baseline model
-├── vqc_model.py                 # VQC baseline model
-├── qru_qrb_local.py            # QRU with QRB (shared ancilla)
-├── qru_qrb_global.py           # QRU with QRB (global ancilla)
-├── train.py                     # Training loop for all architectures
-├── data_utils.py                # Data generation: synthetic & real
-├── evaluate.py                  # Evaluation metrics and loss plots
-├── fft_analysis.py              # Fourier-based expressivity analysis
-├── absorption_witness.py        # Absorption witness implementation
-├── plot_utils.py                # Common plotting utilities
-├── requirements.txt             # List of dependencies
-└── README.md
+📌 Features
+✅ Supports multiple quantum architectures: PQC, VQC, QRU, QRU-QRB (local/global)
+
+✅ Fourier expressivity analysis via amplitude spectrum
+
+✅ Absorption witness & KL divergence computation
+
+✅ Realistic comparison with RNN using parameter-matched setup
+
+✅ Easy extensibility for custom datasets
+
+📖 Citation
+If you use this repository or build upon our work, please cite:
+
+bibtex
+Copy
+Edit
+@inproceedings{casse2025qru,
+  title={Quantum Reupload Units: A Scalable and Expressive Approach for Time Series Learning},
+  author={Cassé, Léa and Ponnambalam, Sabarikirishwaran and Pfahringer, Bernhard and Bifet, Albert},
+  booktitle={IEEE Quantum Week (QCE25)},
+  year={2025}
+}
+
+🧠 Authors
+Léa Cassé – University of Waikato & École Polytechnique
+
+Sabarikirishwaran Ponnambalam – Griffith University
+
+Bernhard Pfahringer – University of Waikato
+
+Albert Bifet – University of Waikato & Télécom Paris
+
+🏷️ Tags & Topics
+#QuantumML #TimeSeriesForecasting #Pennylane #QML #NISQ #QiskitCompatible #QuantumExpressivity #FourierAnalysis #GradientFlow #QuantumCircuitDesign #AbsorptionWitness
+
+📜 License
+This project is licensed under the MIT License – see the LICENSE file for details.
