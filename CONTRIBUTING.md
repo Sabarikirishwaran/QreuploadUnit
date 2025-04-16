@@ -92,7 +92,3 @@ Please review our [Code of Conduct](./CODE_OF_CONDUCT.md). Be kind, inclusive, a
 Thanks for being awesome 🙌  
 — The QRU Team
 ```
-
----
-
-Let me know if you'd like the `tests/` folder scaffolded or want a prefilled issue/PR template too!
