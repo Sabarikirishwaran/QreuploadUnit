@@ -24,12 +24,14 @@ A hardware-efficient, single-qubit quantum architecture tailored for time series
 - QRU–QRB–Global (with independent ancilla)
 
 📊 Datasets
+
 Dataset	Source
 Mackey-Glass	Synthetic chaotic time series
 Sinusoidal Wave	Simple periodic series
 River Level	TAIAO Project (Real-world dataset)
 
 📌 Features
+
 ✅ Supports multiple quantum architectures: PQC, VQC, QRU, QRU-QRB (local/global)
 
 ✅ Fourier expressivity analysis via amplitude spectrum
@@ -41,7 +43,6 @@ River Level	TAIAO Project (Real-world dataset)
 ✅ Easy extensibility for custom datasets
 
 📖 Citation
-If you use this repository or build upon our work, please cite:
 
 bibtex
 Copy
@@ -54,6 +55,7 @@ Edit
 }
 
 🧠 Authors
+
 Léa Cassé – University of Waikato & École Polytechnique
 
 Sabarikirishwaran Ponnambalam – Griffith University
@@ -63,6 +65,7 @@ Bernhard Pfahringer – University of Waikato
 Albert Bifet – University of Waikato & Télécom Paris
 
 🏷️ Tags & Topics
+
 #QuantumML #TimeSeriesForecasting #Pennylane #QML #NISQ #QiskitCompatible #QuantumExpressivity #FourierAnalysis #GradientFlow #QuantumCircuitDesign #AbsorptionWitness
 
 📜 License
