@@ -42,17 +42,16 @@ River Level	TAIAO Project (Real-world dataset)
 
 ✅ Easy extensibility for custom datasets
 
-📖 Citation
+## 📖 Citation
 
-bibtex
-Copy
-Edit
+```bibtex
 @inproceedings{casse2025qru,
   title={Quantum Reupload Units: A Scalable and Expressive Approach for Time Series Learning},
   author={Cassé, Léa and Ponnambalam, Sabarikirishwaran and Pfahringer, Bernhard and Bifet, Albert},
   booktitle={IEEE Quantum Week (QCE25)},
   year={2025}
 }
+```
 
 🧠 Authors
 
