@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/)
 [![Pennylane](https://img.shields.io/badge/Pennylane-compatible-brightgreen)](https://pennylane.ai/)
-[![Stars](https://img.shields.io/github/stars/YOUR_USERNAME/QreuploadUnit?style=social)](https://github.com/YOUR_USERNAME/QreuploadUnit/stargazers)
+[![Stars](https://img.shields.io/github/stars/YOUR_USERNAME/QreuploadUnit?style=social)](https://github.com/Sabarikirishwaran/QreuploadUnit/stargazers)
 
 A hardware-efficient, single-qubit quantum architecture tailored for time series forecasting. This repository provides code, benchmarks, and analysis for the models described in the QCE25 paper: **"Quantum Reupload Units: A Scalable and Expressive Approach for Time Series Learning"**.
 
