@@ -201,9 +201,7 @@ def train_and_eval(model, params_init, X_tr, y_tr, X_te, y_te, name, epochs, lr)
             writer.writerow(["Index", "Actual", "Predicted"])
             for i, (true_val, pred_val) in enumerate(zip(y_te, preds_final)):
                 writer.writerow([i, true_val.item(), pred_val.item()])
-        plot_predictions(y_te.numpy(), preds_final.numpy(), name)
-
-    return loss_hist, acc_hist, grad_norm_hist
+        plot_predictions(y_te.numpy(), preds_final.numpy(), name)    
 
 def main(selected_model, data):
     X_tr_np, y_tr_np, X_te_np, y_te_np = split_data(data, 0.2, seq_length)
