@@ -212,11 +212,11 @@ def main(selected_model, data):
     ]
 
     if selected_model in ("QRU", "all"):
-        print("▶️ Training the QRU mono-qubit…")
+        print("Training the QRU mono-qubit…")
         train_and_eval(quantum_circuit_reupload, params_init_reupload, X_tr, y_tr, X_te, y_te, "QRU_monoqubit", nb_epoch, lr)
 
     if selected_model in ("VQC_bague", "all"):
-        print("▶️ Training the VQC-Bague inverse…")
+        print("Training the VQC-Bague inverse…")
         train_and_eval(quantum_circuit_vqc_bague, params_init_vqc_bague, X_tr, y_tr, X_te, y_te, "VQC_bague_inverse", nb_epoch, lr)
 
 if __name__ == "__main__":
