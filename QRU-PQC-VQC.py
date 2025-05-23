@@ -24,9 +24,11 @@ L_vqc = 1
 num_variational = 3
 nb_epoch = 300
 lr = 0.01
+depth_pqc = 3
 
 dev_reupload = qml.device("default.qubit", wires=nb_qubit_reupload, shots=None)
 dev_vqc = qml.device("default.qubit", wires=nb_qubit_vqc, shots=None)
+dev_pqc = qml.device("default.qubit", wires=1, shots=None)
 
 def encoding_layer(params_encoding, x, seq_length, nb_qubit):
     rotation_gates = [qml.RX, qml.RY, qml.RZ]
@@ -61,6 +63,16 @@ def quantum_circuit_vqc_bague(params, x):
             qml.CNOT(wires=[j, (j + 1) % nb_qubit_vqc])
     for q in reversed(range(nb_qubit_vqc - 1)):
         qml.CNOT(wires=[q + 1, q])
+    return qml.expval(qml.PauliZ(0))
+
+@qml.qnode(dev_pqc, interface="torch")
+def quantum_circuit_pqc(params, x):
+    for j in range(len(x)):
+        qml.RY(x[j], wires=0)
+    for i in range(depth_pqc):
+        for j in range(len(x)):
+            qml.RX(params[i][2 * j], wires=0)
+            qml.RY(params[i][2 * j + 1], wires=0)
     return qml.expval(qml.PauliZ(0))
 
 def mse_loss(y_pred, y_true):
@@ -164,7 +176,6 @@ def train_and_eval(model, params_init, X_tr, y_tr, X_te, y_te, name, epochs, lr)
             preds = torch.stack([model(params, x) for x in X_tr])
             loss = mse_loss(preds, y_tr)
             loss.backward()
-
             grad_norm = torch.sqrt(sum(p.grad.data.norm(2).item() ** 2 for p in params if p.grad is not None))
             opt.step()
 
@@ -211,17 +222,22 @@ def main(selected_model, data):
         torch.full((L_vqc, nb_qubit_vqc * num_variational), np.pi, dtype=torch.float64, requires_grad=True)
     ]
 
+    params_init_pqc = [
+        torch.full((depth_pqc, 2 * seq_length), np.pi, dtype=torch.float64, requires_grad=True)
+    ]
+
     if selected_model in ("QRU", "all"):
-        print("Training the QRU mono-qubit…")
         train_and_eval(quantum_circuit_reupload, params_init_reupload, X_tr, y_tr, X_te, y_te, "QRU_monoqubit", nb_epoch, lr)
 
     if selected_model in ("VQC_bague", "all"):
-        print("Training the VQC-Bague inverse…")
         train_and_eval(quantum_circuit_vqc_bague, params_init_vqc_bague, X_tr, y_tr, X_te, y_te, "VQC_bague_inverse", nb_epoch, lr)
 
+    if selected_model in ("PQC_simple", "all"):
+        train_and_eval(quantum_circuit_pqc, params_init_pqc, X_tr, y_tr, X_te, y_te, "PQC_simple", nb_epoch, lr)
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Train QRU/VQC models on River or MackeyGlass data")
-    parser.add_argument("--model", choices=["QRU", "VQC_bague", "all"], default="QRU", help="Which model to run")
+    parser = argparse.ArgumentParser(description="Train QRU/VQC/PQC models on River or MackeyGlass data")
+    parser.add_argument("--model", choices=["QRU", "VQC_bague", "PQC_simple", "all"], default="QRU", help="Which model to run")
     parser.add_argument("--dataset", choices=["river", "mackey"], default="mackey", help="Dataset to train on")
     args = parser.parse_args()
 
