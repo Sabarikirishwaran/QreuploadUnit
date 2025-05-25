@@ -175,7 +175,18 @@ def train_and_eval(model, params_init, X_tr, y_tr, X_te, y_te, name, epochs, lr)
             preds = torch.stack([model(params, x) for x in X_tr])
             loss = mse_loss(preds, y_tr)
             loss.backward()
-            grad_norm = torch.sqrt(sum(p.grad.data.norm(2).item() ** 2 for p in params if p.grad is not None))
+            assert all(p.grad is not None for p in params), "All parameters must have gradients"
+            #assert all(p.grad.data.norm(2) is torch.Tensor for p in params), "Gradients must be tensors"
+            typecheck = all(isinstance(p.grad, float) for p in params)
+            print(typecheck)
+
+            total_norm = 0.0
+            for p in params:
+                if p.grad is not None:
+                    param_norm = p.grad.data.norm(2)
+                    total_norm += param_norm.item() ** 2
+            grad_norm = total_norm ** 0.5
+            
             opt.step()
 
             with torch.no_grad():
