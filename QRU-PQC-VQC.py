@@ -19,12 +19,13 @@ if torch.cuda.is_available():
 nb_reuploading = 3
 seq_length = 3
 nb_qubit_reupload = 1
+nb_qubit_pqc = 1
 nb_qubit_vqc = 5
 L_vqc = 1
 num_variational = 3
 nb_epoch = 300
 lr = 0.01
-depth_pqc = 3
+depth_pqc = 5
 
 dev_reupload = qml.device("default.qubit", wires=nb_qubit_reupload, shots=None)
 dev_vqc = qml.device("default.qubit", wires=nb_qubit_vqc, shots=None)
@@ -67,12 +68,10 @@ def quantum_circuit_vqc_bague(params, x):
 
 @qml.qnode(dev_pqc, interface="torch")
 def quantum_circuit_pqc(params, x):
-    for j in range(len(x)):
-        qml.RY(x[j], wires=0)
+    params_enc, params_var = params
+    encoding_layer(params_enc, x, seq_length, nb_qubit_pqc)
     for i in range(depth_pqc):
-        for j in range(len(x)):
-            qml.RX(params[i][2 * j], wires=0)
-            qml.RY(params[i][2 * j + 1], wires=0)
+        variational_layer(params_var[i], seq_length, nb_qubit_pqc, num_variational)
     return qml.expval(qml.PauliZ(0))
 
 def mse_loss(y_pred, y_true):
@@ -221,7 +220,8 @@ def main(selected_model, data):
     ]
 
     params_init_pqc = [
-        torch.full((depth_pqc, 2 * seq_length), np.pi, dtype=torch.float64, requires_grad=True)
+        torch.full((seq_length,), np.pi, dtype=torch.float64, requires_grad=True),
+        torch.full((depth_pqc, num_variational), np.pi, dtype=torch.float64, requires_grad=True)
     ]
 
     if selected_model in ("QRU", "all"):
